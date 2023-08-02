@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 List<Map<String, String>> adminUser = [
@@ -13,7 +14,7 @@ bool logedIn = false;
 void main() {
   print("====PATIENT HEALTH MOITOR SYSTEM====");
   var admin = true;
-
+  List<String> Bluetooth = [];
   // print("Press 1 for Amdin Login");
   // print("Press 2 for Add New Admin User");
   // print("Press 3 or any Key for Exit");
@@ -42,24 +43,34 @@ void main() {
     print("Press 1 for Amdin Login");
     print("Press 2 for Add New Admin User");
     print("Press 3 or any Key for Exit");
+    var admin1 = true;
     int adminMode = int.parse(stdin.readLineSync()!);
+
     if (adminMode == 1) {
       adminLogin();
-
-      for (var BtCheck = 0; adminMode == 1 && BtCheck == 0; BtCheck++) {
+      if (Bluetooth.isEmpty) {
         print("Press 4 for Connecting Bluetooth");
         int btMode = int.parse(stdin.readLineSync()!);
         if (btMode == 4) {
           connectBluetooth();
+          Bluetooth.add("Connected");
         }
       }
-      print("Press 5 for Patient Login");
-      print("Press 6 for Add New Patient");
-      int patientMode = int.parse(stdin.readLineSync()!);
-      if (patientMode == 5) {
-        patientLogin();
-      } else if (patientMode == 6) {
-        addPatientUser();
+      // print(Bluetooth);
+      while (admin1) {
+        print("====== Patienxt Login ======");
+        print("Press 5 for Patient Login");
+        print("Press 6 for Add New Patient");
+        print("press 3 or any Key for exit Patient Login");
+        int patientMode = int.parse(stdin.readLineSync()!);
+        if (patientMode == 5) {
+          patientLogin();
+        } else if (patientMode == 6) {
+          addPatientUser();
+        } else {
+          print("Patient Login Exit");
+          admin1 = false;
+        }
       }
     } else if (adminMode == 2) {
       addAdminUser();
@@ -94,7 +105,9 @@ void main() {
 }
 
 adminLogin() {
+  logedIn = false;
   while (!logedIn) {
+    print("====== Admin Login ======");
     print("Enter Your Admin ID");
     var adminUserId = stdin.readLineSync();
     print("Enter Your Password");
@@ -106,7 +119,7 @@ adminLogin() {
         print('User Login Successful');
         logedIn = true;
       } else {
-        print('Login Failed ');
+        print('Login Failed 2');
       }
     }
   }
@@ -114,9 +127,10 @@ adminLogin() {
 
 addAdminUser() {
   adminLogin();
-  print("Enter Your Admin ID");
+  print("====== New Admin Registeration ======");
+  print("Enter New Admin ID");
   var adminNewUserId = stdin.readLineSync()!;
-  print("Enter Your Password");
+  print("Enter Password");
   var adminNewUserPw = stdin.readLineSync()!;
   adminUser.add({'email': "$adminNewUserId", "password": "$adminNewUserPw"});
 }
@@ -157,6 +171,7 @@ patientLogin() {
 }
 
 addPatientUser() {
+  print("====== New Patient Registeration ======");
   print("Enter Patient ID");
   var patientUserId = stdin.readLineSync()!;
   print("Enter Patient Password");
