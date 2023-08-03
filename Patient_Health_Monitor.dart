@@ -108,11 +108,19 @@ adminLogin() {
   logedIn = false;
   while (!logedIn) {
     print("====== Admin Login ======");
+    // adminUser.contains;
+    // print(adminUser);
     print("Enter Your Admin ID");
     var adminUserId = stdin.readLineSync();
     print("Enter Your Password");
     var adminUserPw = stdin.readLineSync();
+    bool check = adminUser.contains(adminUserId);
+    print(adminUserId);
 
+    // if (adminUser.contains == adminUserId &&
+    //     adminUser.contains == adminUserPw) {
+    //   print("object");
+    // }
     for (var credentials in adminUser) {
       if (adminUserId == credentials['email'] &&
           adminUserPw == credentials['password']) {
