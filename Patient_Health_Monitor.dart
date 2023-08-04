@@ -2,15 +2,22 @@ import 'dart:async';
 import 'dart:io';
 
 List<Map<String, String>> adminUser = [
-  {"email": "abc@gmail.com", "password": "123"}
+  {"email": "ab", "password": "123"}
 ];
 // Map adminUser = {
 //     "email": "abc@gmail.com",
 //     "password": "123",
 //   };
+// var adminNewUser = stdin.readLineSync()!;
+// Map<String, dynamic> adminUser1 = {
+//     adminNewUser : {"email": "abc@gmail.com", "password": "123"},
+//     "secA": {"student": 60, "timing": "7 to 9"},
+//     "secB": {"student": 60, "timing": "9 to 11"}
+//   };
 List<Map<String, String>> patientUser = [];
 // List patientUser = [];
 bool logedIn = false;
+bool isSuccess = false;
 void main() {
   print("====PATIENT HEALTH MOITOR SYSTEM====");
   var admin = true;
@@ -58,7 +65,7 @@ void main() {
       }
       // print(Bluetooth);
       while (admin1) {
-        print("====== Patienxt Login ======");
+        print("====== Patient Login ======");
         print("Press 5 for Patient Login");
         print("Press 6 for Add New Patient");
         print("press 3 or any Key for exit Patient Login");
@@ -114,33 +121,47 @@ adminLogin() {
     var adminUserId = stdin.readLineSync();
     print("Enter Your Password");
     var adminUserPw = stdin.readLineSync();
-    bool check = adminUser.contains(adminUserId);
-    print(adminUserId);
 
+    // if (adminUser[adminNewUser]["email"] == adminUser &&
+    //   adminUser[adminNewUser]["password"] == adminUserPw) {
+    // print('User Login Successful');
+    // } else {
+    // print('Login Failed 2');
+    // }
     // if (adminUser.contains == adminUserId &&
     //     adminUser.contains == adminUserPw) {
     //   print("object");
     // }
-    for (var credentials in adminUser) {
-      if (adminUserId == credentials['email'] &&
-          adminUserPw == credentials['password']) {
-        print('User Login Successful');
-        logedIn = true;
-      } else {
-        print('Login Failed 2');
-      }
-    }
+
+    checkUser(adminUserId, adminUserPw);
+  }
+}
+
+void checkUser(String? adminUserId, String? adminUserPw) {
+  bool userEmailExit =
+      adminUser.any((credentials) => credentials['email'] == adminUserId);
+  bool userPassExit =
+      adminUser.any((credentials) => credentials['password'] == adminUserPw);
+
+  if (userEmailExit && userPassExit) {
+    print('User Login Successfully !!!!');
+    logedIn = true;
+    return;
+  } else {
+    print('User Not Exit in list !!!');
   }
 }
 
 addAdminUser() {
   adminLogin();
   print("====== New Admin Registeration ======");
+  // var adminNewUser = stdin.readLineSync()!;
   print("Enter New Admin ID");
   var adminNewUserId = stdin.readLineSync()!;
   print("Enter Password");
   var adminNewUserPw = stdin.readLineSync()!;
   adminUser.add({'email': "$adminNewUserId", "password": "$adminNewUserPw"});
+  // adminUser1.addAll({adminNewUser:{'email': "$adminNewUserId", "password": "$adminNewUserPw"}});
 }
 
 updateAdminUser() {
