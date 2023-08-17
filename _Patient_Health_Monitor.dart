@@ -1,4 +1,4 @@
-import 'dart:async';
+// import 'dart:async';
 import 'dart:io';
 
 List<Map<String, String>> adminUser = [
@@ -19,7 +19,7 @@ List<Map<String, String>> patientUser = [];
 bool logedIn = false;
 bool isSuccess = false;
 void main() {
-  print("====PATIENT HEALTH MOITOR SYSTEM====");
+  print("==== PATIENT HEALTH MOITOR SYSTEM ====");
   var admin = true;
   List<String> Bluetooth = [];
   // print("Press 1 for Amdin Login");
@@ -133,11 +133,11 @@ adminLogin() {
     //   print("object");
     // }
 
-    checkUser(adminUserId, adminUserPw);
+    adminCredentials(adminUserId, adminUserPw);
   }
 }
 
-void checkUser(String? adminUserId, String? adminUserPw) {
+void adminCredentials(String? adminUserId, String? adminUserPw) {
   bool userEmailExit =
       adminUser.any((credentials) => credentials['email'] == adminUserId);
   bool userPassExit =
@@ -183,15 +183,16 @@ patientLogin() {
       print("Enter Your Patient Password");
       var patientUserPw = stdin.readLineSync();
 
-      for (var credentials in patientUser) {
-        if (patientUserId == credentials['patientID'] &&
-            patientUserPw == credentials['password']) {
-          print('User Login Successful');
-          logedIn = true;
-        } else {
-          print('Login Failed 1');
-        }
-      }
+      //   for (var credentials in patientUser) {
+      //     if (patientUserId == credentials['patientID'] &&
+      //         patientUserPw == credentials['password']) {
+      //       print('User Login Successful');
+      //       logedIn = true;
+      //     } else {
+      //       print('Login Failed 1');
+      //     }
+      //   }
+      patientCredentials(patientUserId, patientUserPw);
     } else {
       print("Please Register Patient");
       addPatientUser();
@@ -199,14 +200,30 @@ patientLogin() {
   }
 }
 
+void patientCredentials(String? patientUserId, String? patientUserPw) {
+  bool userEmailExit = patientUser
+      .any((credentials) => credentials['patientID'] == patientUserId);
+  bool userPassExit = patientUser
+      .any((credentials) => credentials['password'] == patientUserPw);
+
+  if (userEmailExit && userPassExit) {
+    print('User Login Successfully !!!!');
+    logedIn = true;
+    return;
+  } else {
+    print('User Login Failed !!!');
+  }
+}
+
 addPatientUser() {
   print("====== New Patient Registeration ======");
   print("Enter Patient ID");
-  var patientUserId = stdin.readLineSync()!;
+  var newPatientUserId = stdin.readLineSync()!;
   print("Enter Patient Password");
-  var patientUserPw = stdin.readLineSync()!;
+  var newPatientUserPw = stdin.readLineSync()!;
   patientUser
-      .add({'patientID': "$patientUserId", "password": "$patientUserPw"});
+      .add({'patientID': "$newPatientUserId", "password": "$newPatientUserPw"});
+  print(patientUser);
 }
 // addTask() {
 //   print("Enter Your Task Title");
